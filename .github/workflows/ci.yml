@@ -102,7 +102,7 @@ jobs:
         working-directory: ./app
         id: build
         run: |
-          npm run build
+          npm run dev
       - name: Install Cypress
         working-directory: ./testing
         run: |
@@ -111,8 +111,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           working-directory: ./testing
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 60
           command: npx cypress run --spec "cypress/e2e/smoke/*.cy.ts"
         env:
           CYPRESS_BASE_URL: http://localhost:3000
