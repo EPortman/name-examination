@@ -99,7 +99,7 @@ jobs:
         run: npm install
       - name: E2E Tests
         working-directory: ./testing
-        run: npm run test:e2e
+        run: npm run smoke
         env:
           CYPRESS_BASE_URL: http://localhost:8080
           CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
