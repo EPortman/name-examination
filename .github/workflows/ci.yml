@@ -95,7 +95,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
-        working-directory: ./app
+        working-directory: ./testing
         run: npm install
       - name: E2E Tests
         working-directory: ./testing
