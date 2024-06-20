@@ -2,7 +2,7 @@ name: NAME-EXAMINATION UI CI
 
 on:
   pull_request:
-    types: [assigned, synchronize]
+    types: [assigned, synchronize, opened, reopened]
 
 defaults:
   run:
@@ -12,7 +12,6 @@ jobs:
   setup-job:
     runs-on: ubuntu-20.04
 
-    if: github.repository == 'bcgov/name-examination'
 
     steps:
       - uses: actions/checkout@v3
@@ -114,6 +113,12 @@ jobs:
           command: npx cypress run --spec "cypress/e2e/smoke/*.cy.ts"
         env:
           CYPRESS_BASE_URL: http://localhost:3000
+          CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
+          CYPRESS_ENVIRONMENT: ${{ github.base_ref }}
+          CYPRESS_loginproxy: ${{ secrets.CYPRESS_LOGINPROXY }}
+          CYPRESS_siteminder: ${{ secrets.CYPRESS_SITEMINDER }}
+          CYPRESS_smoketest: ${{inputs.smoketest}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
   build-check:
     needs: setup-job
