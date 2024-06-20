@@ -98,7 +98,7 @@ jobs:
         working-directory: ./app
         run: npm install
       - name: E2E Tests
-        working-directory: ./app
+        working-directory: ./testing
         run: npm run test:e2e
         env:
           CYPRESS_BASE_URL: http://localhost:8080
