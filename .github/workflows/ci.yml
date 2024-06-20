@@ -78,6 +78,43 @@ jobs:
           fail_ci_if_error: true
           token: c4c60cf0-440a-4527-bdb8-0ae8b51c62bf
 
+  smoke-tests:
+    needs: setup-job
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        node-version: [20.5.1]
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        working-directory: ./app
+        run: |
+          npm install
+      - name: build
+        working-directory: ./app
+        id: build
+        run: |
+          npm run build
+      - name: Install Cypress
+        working-directory: ./testing
+        run: |
+          npm ci
+      - name: Run Cypress Smoke Tests
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: ./testing
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 60
+          command: npx cypress run --spec "cypress/e2e/smoke/*.cy.ts"
+        env:
+          CYPRESS_BASE_URL: http://localhost:3000
+        
   build-check:
     needs: setup-job
     runs-on: ubuntu-20.04
