@@ -16,7 +16,7 @@
   },
   "scripts": {
     "report": "mochawesome-merge -o mochawesome-report/report.json && marge mochawesome-report/report.json -i --charts=true",
-    "smoke": "start-server-and-test 'cd ../app && npm run start:ci' http://localhost:8080 'npm run smoke'",
+    "smoke": "start-server-and-test 'cd ../app && npm run dev' http://localhost:8080 'npm run smoke'",
     "test": "cypress run --browser chrome"
   },
   "dependencies": {
