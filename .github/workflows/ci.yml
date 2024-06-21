@@ -92,7 +92,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Dependencies for App
+      - name: Install Dependencies for Application
         working-directory: ./app
         run: npm install
 
@@ -100,11 +100,17 @@ jobs:
         working-directory: ./testing
         run: npm install
 
-      - name: Serve and Smoke
+      - name: Start Application Server
+        working-directory: ./testing
+        run: npm run start-app-server
+        env:
+          CYPRESS_BASE_URL: http://localhost:8080
+
+      - name: Run Smoke Tests
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./testing
-          start: npm run serve-and-smoke
+          command: npm run smoke
         env:
           CYPRESS_BASE_URL: http://localhost:8080
           CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
@@ -113,34 +119,13 @@ jobs:
           CYPRESS_siteminder: ${{ secrets.CYPRESS_SITEMINDER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Capture Logs if Failure
-        if: failure()
-        run: |
-          echo "Dumping server logs..."
-          cat ./app/server.log
-          echo "Dumping Nuxt build logs..."
-          cat ./app/.nuxt/nuxt-build.log
-
-      - name: Upload Cypress Screenshots
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: cypress-screenshots
-          path: ./testing/cypress/screenshots
-
-      - name: Upload Cypress Videos
+      - name: Upload Cypress Videos if Failure
         if: failure()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-videos
           path: ./testing/cypress/videos
 
-      - name: Upload Application Logs
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-logs
-          path: ./app/logs/
 
   build-check:
     needs: setup-job
