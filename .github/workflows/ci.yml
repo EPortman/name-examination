@@ -78,28 +78,28 @@ jobs:
           fail_ci_if_error: true
           token: c4c60cf0-440a-4527-bdb8-0ae8b51c62bf
   
-  smoke-tests:
+  auto-smoke-tests:
     needs: setup-job
     runs-on: ubuntu-20.04
 
     strategy:
       matrix:
         node-version: [20.5.1]
-
+        
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '20.5.1'
           cache: 'npm'
+
       - name: Install Dependencies for App
         working-directory: ./app
-        run: npm ci
+        run: npm install
       - name: Install Dependencies for Testing
         working-directory: ./testing
-        run: npm ci
+        run: npm install
       - name: Start App and Run Smoke Tests
         working-directory: ./testing
         run: npm run serve-and-smoke
@@ -170,3 +170,4 @@ jobs:
 
 
 # Add a comment
+# Another one
