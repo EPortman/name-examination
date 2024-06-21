@@ -13,4 +13,3 @@ export enum SearchColumns {
   LastUpdate = 'Last Update',
   LastComment = 'Last Comment',
 }
-// comment
