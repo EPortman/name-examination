@@ -36,4 +36,5 @@ const links = [
   { text: 'Hours of Availability', route: 'https://www2.gov.bc.ca/gov/content?id=C41D8179671441B2BAA3BDDD3D89C9A9' },
   { text: 'Copyright', route: 'https://www2.gov.bc.ca/gov/content/home/copyright' }
 ]
+// comment
 </script>
