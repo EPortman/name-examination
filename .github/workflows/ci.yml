@@ -2,7 +2,7 @@ name: NAME-EXAMINATION UI CI
 
 on:
   pull_request:
-    types: [assigned, synchronize, opened, reopened]
+    types: [assigned, synchronize]
 
 defaults:
   run:
@@ -11,6 +11,9 @@ defaults:
 jobs:
   setup-job:
     runs-on: ubuntu-20.04
+
+    if: github.repository == 'bcgov/name-examination'
+
     steps:
       - uses: actions/checkout@v3
       - run: 'true'
@@ -74,7 +77,7 @@ jobs:
           name: codecov-namex
           fail_ci_if_error: true
           token: c4c60cf0-440a-4527-bdb8-0ae8b51c62bf
-  
+
   auto-smoke-tests:
     needs: setup-job
     runs-on: ubuntu-20.04
@@ -109,7 +112,6 @@ jobs:
           CYPRESS_ENVIRONMENT: ${{ github.base_ref }}
           CYPRESS_loginproxy: ${{ secrets.CYPRESS_LOGINPROXY }}
           CYPRESS_siteminder: ${{ secrets.CYPRESS_SITEMINDER }}
-          CYPRESS_smoketest: ${{ inputs.smoketest }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Capture Logs if Failure
