@@ -3,7 +3,7 @@ name: NAME-EXAMINATION UI CI
 on:
   pull_request:
     types: [assigned, synchronize, opened, reopened]
-    # types: [assigned, synchronize]
+
 
 defaults:
   run:
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: 'true'
 
-      
+
   linting:
     needs: setup-job
     runs-on: ubuntu-20.04
