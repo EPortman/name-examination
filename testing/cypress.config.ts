@@ -24,7 +24,7 @@ export default defineConfig({
     // baseUrl: 'https://dev.namex.bcregistry.gov.bc.ca',
     // baseUrl: 'https://test.namex.bcregistry.gov.bc.ca',
     baseUrl: 'http://localhost:8080',
-    projectId: '',
+    projectId: 'chruvi',
     setupNodeEvents(on, config) {
       on('task', {
         checkFileExists(filePath) {

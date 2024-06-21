@@ -107,7 +107,7 @@ jobs:
           working-directory: ./testing
           start: npm run serve-and-smoke
         env:
-          CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASEURL }}
+          CYPRESS_BASE_URL: http://localhost:8080/
           CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
           CYPRESS_ENVIRONMENT: ${{ github.base_ref }}
           CYPRESS_loginproxy: ${{ secrets.CYPRESS_LOGINPROXY }}
