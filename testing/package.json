@@ -19,7 +19,7 @@
     "smoke": "cypress run --spec 'cypress/e2e/**/smoke-*-*.cy.ts' --browser chrome",
     "test": "cypress run --browser chrome",
     "start-app-server": "cd ../app && npm run dev",
-    "serve-and-smoke": "start-server-and-test 'cd ../app && npm run dev' http://localhost:8080 smoke"
+    "serve-and-smoke": "start-server-and-test 'npm run start-app-server' http://localhost:8080 smoke"
   },
   "dependencies": {
     "crypto-js": "^4.2.0",

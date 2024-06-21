@@ -100,15 +100,11 @@ jobs:
         working-directory: ./testing
         run: npm install
 
-      - name: Cypress Tests
+      - name: Serve and Smoke
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./testing
-          start: npm run start-app-server
-          wait-on: 'http://localhost:8080'
-          wait-on-timeout: 300
-          command: npm run smoke
-          cache-key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          start: npm run serve-and-smoke
         env:
           CYPRESS_BASE_URL: http://localhost:8080
           CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
