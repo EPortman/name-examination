@@ -83,7 +83,6 @@ jobs:
       matrix:
         node-version: [20.5.1]
         
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up Node.js
@@ -94,10 +93,10 @@ jobs:
 
       - name: Install Dependencies for App
         working-directory: ./app
-        run: npm ci
+        run: npm install
       - name: Install Dependencies for Testing
         working-directory: ./testing
-        run: npm ci
+        run: npm install
       - name: Start App and Run Smoke Tests
         working-directory: ./testing
         run: npm run serve-and-smoke
