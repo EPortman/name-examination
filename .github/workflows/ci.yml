@@ -75,7 +75,7 @@ jobs:
           fail_ci_if_error: true
           token: c4c60cf0-440a-4527-bdb8-0ae8b51c62bf
   
-  smoke-tests:
+  auto-smoke-tests:
     needs: setup-job
     runs-on: ubuntu-20.04
 
