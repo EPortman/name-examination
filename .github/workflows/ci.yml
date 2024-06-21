@@ -103,6 +103,7 @@ jobs:
       - name: Start Application Server and Run Tests
         uses: cypress-io/github-action@v6
         with:
+          browser: chrome
           working-directory: ./testing
           start: npm run serve-and-smoke
         env:
