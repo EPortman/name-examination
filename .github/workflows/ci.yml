@@ -85,18 +85,24 @@ jobs:
     strategy:
       matrix:
         node-version: [20.5.1]
-        
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.5.1'
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
-
-      - name: Run Smoke Test
+      - name: Install Dependencies for App
+        working-directory: ./app
+        run: npm ci
+      - name: Install Dependencies for Testing
         working-directory: ./testing
-        run: npm run smoke
+        run: npm ci
+      - name: Start App and Run Smoke Tests
+        working-directory: ./testing
+        run: npm run serve-and-smoke
         env:
           CYPRESS_BASE_URL: http://localhost:8080
           CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
