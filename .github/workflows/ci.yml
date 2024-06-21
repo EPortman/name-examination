@@ -104,9 +104,10 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./testing
-          start: npm run dev
+          start: cd ../app && npm run dev
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 300 # seconds to wait for your server to start
+          command: npm run smoke 
           cache-key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
         env:
           CYPRESS_BASE_URL: http://localhost:8080
