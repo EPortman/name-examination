@@ -7,9 +7,7 @@ describe('Check for Broken Static Links', () => {
   })
 
   afterEach(() => {
-    cy.logout().then(() => {
-      cy.log('Logged out successfully');
-    })
+    cy.logout()
   })
 
   it('Check All Static Links', () => {
