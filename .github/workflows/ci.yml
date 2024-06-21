@@ -107,18 +107,11 @@ jobs:
           start: npm run serve-and-smoke
         env:
           CYPRESS_BASE_URL: http://localhost:8080
-          CYPRESS_users: "{\"type\": \"default\", \"username\": \"eportman\", \"password\": \"Canadia1!Canadia1!\", \"email\": \"ePortman\", \"otpsecret\": \"\"}"
+          CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
           CYPRESS_ENVIRONMENT: ${{ github.base_ref }}
-          CYPRESS_loginproxy: "https://dev.loginproxy.gov.bc.ca"
-          CYPRESS_siteminder: "https://logontest7.gov.bc.ca"
+          CYPRESS_loginproxy: ${{ secrets.CYPRESS_LOGINPROXY }}
+          CYPRESS_siteminder: ${{ secrets.CYPRESS_SITEMINDER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # env:
-        #   CYPRESS_BASE_URL: http://localhost:8080
-        #   CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
-        #   CYPRESS_ENVIRONMENT: ${{ github.base_ref }}
-        #   CYPRESS_loginproxy: ${{ secrets.CYPRESS_LOGINPROXY }}
-        #   CYPRESS_siteminder: ${{ secrets.CYPRESS_SITEMINDER }}
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Upload Cypress Videos if Failure
         if: failure()
