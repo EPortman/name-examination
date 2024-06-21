@@ -37,3 +37,5 @@ const links = [
   { text: 'Copyright', route: 'https://www2.gov.bc.ca/gov/content/home/copyright' }
 ]
 </script>
+
+<!-- COMMENT -->
