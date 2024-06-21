@@ -2,7 +2,7 @@ name: NAME-EXAMINATION UI CI
 
 on:
   pull_request:
-    types: [assigned, synchronize]
+    types: [assigned, synchronize, opened, reopened]
 
 defaults:
   run:
