@@ -2,7 +2,7 @@ name: NAME-EXAMINATION UI CI
 
 on:
   pull_request:
-    types: [assigned, synchronize]
+    types: [assigned, synchronize, opened, reopened]
 
 defaults:
   run:
@@ -85,15 +85,14 @@ jobs:
         node-version: [20.5.1]
         
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
-      - name: Install Dependencies for App
+      - name: Install Dependencies for Application
         working-directory: ./app
         run: npm install
 
@@ -101,45 +100,27 @@ jobs:
         working-directory: ./testing
         run: npm install
 
-      - name: Start App and Run Smoke Tests
-        working-directory: ./testing
-        run: npm run serve-and-smoke
+      - name: Start Application Server and Run Tests
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          working-directory: ./testing
+          start: npm run serve-and-smoke
         env:
-          CYPRESS_BASE_URL: http://localhost:8080
+          CYPRESS_BASE_URL: http://localhost:8080/
           CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
           CYPRESS_ENVIRONMENT: ${{ github.base_ref }}
           CYPRESS_loginproxy: ${{ secrets.CYPRESS_LOGINPROXY }}
           CYPRESS_siteminder: ${{ secrets.CYPRESS_SITEMINDER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Capture Logs if Failure
-        if: failure()
-        run: |
-          echo "Dumping server logs..."
-          cat ./app/server.log
-          echo "Dumping Nuxt build logs..."
-          cat ./app/.nuxt/nuxt-build.log
-
-      - name: Upload Cypress Screenshots
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: cypress-screenshots
-          path: ./testing/cypress/screenshots
-
-      - name: Upload Cypress Videos
+      - name: Upload Cypress Videos if Failure
         if: failure()
         uses: actions/upload-artifact@v2
         with:
           name: cypress-videos
           path: ./testing/cypress/videos
 
-      - name: Upload Application Logs
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-logs
-          path: ./app/logs/
 
   build-check:
     needs: setup-job
