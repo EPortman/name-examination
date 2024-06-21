@@ -100,17 +100,11 @@ jobs:
         working-directory: ./testing
         run: npm install
 
-      - name: Start Application Server
-        working-directory: ./testing
-        run: npm run start-app-server
-        env:
-          CYPRESS_BASE_URL: http://localhost:8080
-
-      - name: Run Smoke Tests
+      - name: Start Application Server and Run Tests
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./testing
-          command: npm run smoke
+          start: npm run serve-and-smoke
         env:
           CYPRESS_BASE_URL: http://localhost:8080
           CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
