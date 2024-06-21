@@ -1,9 +1,12 @@
 name: NAME-EXAMINATION UI CI
 
+
+
+
 on:
   pull_request:
     types: [assigned, synchronize, opened, reopened]
-    # types: [assigned, synchronize]
+
 
 defaults:
   run:
@@ -112,6 +115,35 @@ jobs:
           CYPRESS_smoketest: ${{ inputs.smoketest }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  smoke-tests:
+    needs: setup-job
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        node-version: [20.5.1]
+        
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        working-directory: ./app
+        run: npm install
+      - name: E2E Tests
+        working-directory: ./app
+        run: npm run test:e2e
+        env:
+          CYPRESS_BASE_URL: http://localhost:8080
+          CYPRESS_users: ${{ secrets.CYPRESS_USERS }}
+          CYPRESS_ENVIRONMENT: ${{ github.base_ref }}
+          CYPRESS_loginproxy: ${{ secrets.CYPRESS_LOGINPROXY }}
+          CYPRESS_siteminder: ${{ secrets.CYPRESS_SITEMINDER }}
+          CYPRESS_smoketest: ${{ inputs.smoketest }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
   build-check:
     needs: setup-job
     runs-on: ubuntu-20.04
