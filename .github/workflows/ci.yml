@@ -12,8 +12,6 @@ jobs:
   setup-job:
     runs-on: ubuntu-20.04
 
-    if: github.repository == 'bcgov/name-examination'
-
     steps:
       - uses: actions/checkout@v3
       - run: 'true'
