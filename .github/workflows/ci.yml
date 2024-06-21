@@ -86,17 +86,16 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Set up Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
       - name: Install Dependencies for App
         working-directory: ./app
-        run: npm ci
+        run: npm install
       - name: Install Dependencies for Testing
         working-directory: ./testing
-        run: npm ci
+        run: npm install
       - name: Start App and Run Smoke Tests
         working-directory: ./testing
         run: npm run serve-and-smoke
