@@ -12,7 +12,12 @@
     </IconButton>
 
     <!-- Toggle Details Button -->
-    <IconButton light @click="toggleDetails" mnemonic="b">
+    <IconButton 
+      light 
+      @click="toggleDetails" 
+      mnemonic="b"
+      :data-testid="examine.isHeaderShown ? 'actionHideDetailsBtn' : 'actionShowDetailsBtn'"
+    >
       <ArrowsPointingInIcon
         v-if="examine.isHeaderShown"
         class="h-5 w-5"
